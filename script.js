@@ -1,6 +1,6 @@
 /**
  * StoreWay • Multi-Floor Mall Pathfinding & Algorithmic Comparison
- * Core graph definition, algorithms (Dijkstra, Bellman-Ford, BFS), and interactive map engine.
+ * Core graph definition, algorithms (Dijkstra, Bellman-Ford, BFS), theme controller, and interactive mall map engine.
  */
 
 const $ = id => document.getElementById(id);
@@ -25,37 +25,37 @@ const STORES = [
   ["Gym", "Bank", "Arcade", "Rooftop Cafe"]
 ];
 
-// Store Categories and Palette for Realistic Storefront Styling
+// Rich Store Categories, Palettes, and Iconic Glyphs
 const STORE_META = [
   [
-    { cat: "Fashion", color: "#6366f1" },
-    { cat: "Sportswear", color: "#0ea5e9" },
-    { cat: "Technology", color: "#0284c7" },
-    { cat: "Cafe & Coffee", color: "#d97706" }
+    { cat: "Fashion Flagship", glyph: "🛍️", color: "#4f46e5" },
+    { cat: "Athletic & Sport", glyph: "👟", color: "#0284c7" },
+    { cat: "Consumer Tech", glyph: "💻", color: "#334155" },
+    { cat: "Specialty Cafe", glyph: "☕", color: "#b45309" }
   ],
   [
-    { cat: "Apparel", color: "#8b5cf6" },
-    { cat: "Food & Dining", color: "#f97316" },
-    { cat: "Beauty & Care", color: "#ec4899" },
-    { cat: "Books & Gifts", color: "#10b981" }
+    { cat: "Modern Casuals", glyph: "👕", color: "#7c3aed" },
+    { cat: "Dining Plaza", glyph: "🍔", color: "#ea580c" },
+    { cat: "Beauty & Care", glyph: "💄", color: "#db2777" },
+    { cat: "Books & Station", glyph: "📚", color: "#059669" }
   ],
   [
-    { cat: "Multiplex", color: "#7c3aed" },
-    { cat: "Entertainment", color: "#f43f5e" },
-    { cat: "Electronics", color: "#0284c7" },
-    { cat: "Pharmacy", color: "#059669" }
+    { cat: "Cinema & IMAX", glyph: "🎬", color: "#6d28d9" },
+    { cat: "Arcade & Gaming", glyph: "🎮", color: "#e11d48" },
+    { cat: "Audio & Gadgets", glyph: "🎧", color: "#0284c7" },
+    { cat: "Health & Pharma", glyph: "💊", color: "#0d9488" }
   ],
   [
-    { cat: "Home Living", color: "#d97706" },
-    { cat: "Luxury Watches", color: "#eab308" },
-    { cat: "Kids & Toys", color: "#06b6d4" },
-    { cat: "Beauty Salon", color: "#d946ef" }
+    { cat: "Home & Furniture", glyph: "🛋️", color: "#b45309" },
+    { cat: "Luxury Watches", glyph: "💎", color: "#ca8a04" },
+    { cat: "Toys & Family", glyph: "🧸", color: "#0891b2" },
+    { cat: "Wellness Spa", glyph: "💇", color: "#c026d3" }
   ],
   [
-    { cat: "Fitness Club", color: "#10b981" },
-    { cat: "Banking", color: "#2563eb" },
-    { cat: "Gaming Lounge", color: "#f43f5e" },
-    { cat: "Sky Terrace", color: "#ea580c" }
+    { cat: "Fitness Club", glyph: "🏋️", color: "#16a34a" },
+    { cat: "Banking & ATM", glyph: "🏦", color: "#1d4ed8" },
+    { cat: "VR Lounge", glyph: "🕹️", color: "#e11d48" },
+    { cat: "Sky Terrace Cafe", glyph: "🍸", color: "#c2410c" }
   ]
 ];
 
@@ -317,7 +317,7 @@ function compare(s, t, r) {
 }
 
 /* ==========================================================================
-   State & SVG Mall Rendering Engine
+   State & SVG Mall Rendering Engine (Architectural Store Floorplan)
    ========================================================================== */
 let cur = 0, run = 0;
 let st = { explored: new Set(), path: [], cur: null, marker: "0:EN" };
@@ -328,17 +328,18 @@ function render() {
 
   // 1) Mall Architecture Canvas Outline & Zone Watermarks
   let h = `
-    <!-- Mall Architectural Boundary Wall -->
-    <rect class="mall-boundary-wall" x="60" y="45" width="880" height="470" rx="22"/>
+    <!-- Mall Architectural Exterior Walls & Glass Curtain Façade -->
+    <rect class="mall-boundary-outer" x="50" y="38" width="900" height="484" rx="26"/>
+    <rect class="mall-curtain-glass" x="55" y="43" width="890" height="474" rx="22"/>
     
     <!-- Floor Header Title & Wing Annotations -->
-    <text class="mall-level-title" x="500" y="80">${F[f].toUpperCase()} • ${FLOOR_SUBTITLES[f].toUpperCase()}</text>
-    <text class="mall-zone-tag" x="250" y="98">West Wing • Promenade</text>
-    <text class="mall-zone-tag" x="500" y="98">Central Atrium & Elevators</text>
-    <text class="mall-zone-tag" x="750" y="98">East Wing • Galleries</text>
+    <text class="mall-level-title" x="500" y="74">${F[f].toUpperCase()} • ${FLOOR_SUBTITLES[f].toUpperCase()}</text>
+    <text class="mall-zone-tag" x="250" y="94">West Wing Promenade</text>
+    <text class="mall-zone-tag" x="500" y="94">Central Grand Atrium</text>
+    <text class="mall-zone-tag" x="750" y="94">East Wing Galleries</text>
   `;
 
-  // 2) Concourse & Walkways
+  // 2) Wide Concourse & Walkways
   const vertEnd = f === 0 ? 500 : 420;
   h += `
     <!-- Wide Walkway Concourse Underlays -->
@@ -353,9 +354,11 @@ function render() {
     <line class="concourse-centerline" x1="140" y1="300" x2="860" y2="300"/>
     <line class="concourse-centerline" x1="500" y1="190" x2="500" y2="${vertEnd}"/>
 
-    <!-- Central Atrium Plaza Pattern -->
-    <circle class="atrium-ring-outer" cx="500" cy="300" r="42"/>
-    <circle class="atrium-ring-inner" cx="500" cy="300" r="28"/>
+    <!-- Central Grand Atrium Rotunda Court -->
+    <circle class="atrium-outer-terrazzo" cx="500" cy="300" r="48"/>
+    <circle class="atrium-balustrade-ring" cx="500" cy="300" r="36"/>
+    <circle class="atrium-surface-circle" cx="500" cy="300" r="26"/>
+    <text class="atrium-title-label" x="500" y="303">ATRIUM</text>
   `;
 
   // Corridor Graph Edges (visualize crowded zones)
@@ -371,8 +374,8 @@ function render() {
           const midY = (a.y + b.y) / 2;
           h += `
             <g>
-              <rect x="${midX - 35}" y="${midY - 10}" width="70" height="20" rx="10" fill="var(--warning-light)" stroke="var(--warning-border)" stroke-width="1"/>
-              <text x="${midX}" y="${midY + 4}" font-size="9" font-weight="700" fill="#b45309" text-anchor="middle">⚠️ High Crowd</text>
+              <rect x="${midX - 42}" y="${midY - 11}" width="84" height="22" rx="11" fill="var(--warning-light)" stroke="var(--warning-border)" stroke-width="1.5"/>
+              <text x="${midX}" y="${midY + 4}" font-size="9.5" font-weight="800" fill="#b45309" text-anchor="middle">⚠️ High Traffic (3x)</text>
             </g>
           `;
         }
@@ -380,7 +383,7 @@ function render() {
     });
   });
 
-  // 3) Store Units Presentation (Distinct Retail Storefronts)
+  // 3) Retail Store Units Presentation (Strong Storefront Presence)
   SLOTS.forEach(([k, doorX, doorY, , rx, ry], i) => {
     const id = f + ":" + k;
     const isStart = id === S;
@@ -388,42 +391,41 @@ function render() {
     const storeName = STORES[f][i];
     const meta = STORE_META[f][i];
     const unitCode = `UNIT ${f === 0 ? 'G' : 'L' + f}-${(i + 1).toString().padStart(2, '0')}`;
-
     const isTopRow = ry < 200;
-    const fasciaY = isTopRow ? ry + 76 : ry;
-    const textCenterY = isTopRow ? ry + 42 : ry + 56;
-    const doorMatY = isTopRow ? ry + 98 : ry - 2;
 
     h += `
       <!-- Storefront Unit: ${storeName} -->
       <g class="store-group${isStart ? ' is-start' : ''}${isDest ? ' is-dest' : ''}" onclick="selectStore('${id}')">
         <!-- Store Interior Card -->
-        <rect class="store-card" x="${rx}" y="${ry}" width="160" height="100" rx="12" filter="url(#card-shadow)"/>
+        <rect class="store-card" x="${rx}" y="${ry}" width="160" height="100" rx="14" filter="url(#card-shadow)"/>
         
         <!-- Storefront Fascia Canopy Bar -->
-        <rect class="store-fascia-bar" x="${rx}" y="${fasciaY}" width="160" height="24" rx="0" fill="${meta.color}"/>
-        <text class="store-category-label" x="${rx + 80}" y="${fasciaY + 16}">${meta.cat}</text>
+        <rect class="store-canopy-bar" x="${rx}" y="${ry}" width="160" height="26" rx="13 13 0 0" fill="${meta.color}"/>
+        <text class="store-category-text" x="${rx + 80}" y="${ry + 17}">${meta.glyph} ${meta.cat}</text>
 
-        <!-- Unit Code & Store Name -->
-        <text class="store-unit-number" x="${rx + 80}" y="${isTopRow ? ry + 22 : ry + 40}">${unitCode}</text>
-        <text class="store-name-text" x="${rx + 80}" y="${textCenterY}">${storeName}</text>
+        <!-- Secondary Unit Code & Primary Store Name -->
+        <text class="store-unit-number" x="${rx + 80}" y="${ry + 42}">${unitCode}</text>
+        <text class="store-name-text" x="${rx + 80}" y="${ry + 63}">${storeName}</text>
+
+        <!-- Glass Display Window Line -->
+        <line class="store-window-line" x1="${rx + 15}" y1="${isTopRow ? ry + 88 : ry + 12}" x2="${rx + 145}" y2="${isTopRow ? ry + 88 : ry + 12}"/>
 
         <!-- Store Door Threshold Mat pointing toward corridor -->
-        <rect class="store-door-mat" x="${doorX - 12}" y="${doorMatY}" width="24" height="4" rx="2"/>
-        <circle class="store-door-marker" cx="${doorX}" cy="${doorY}" r="4"/>
+        <rect class="store-door-threshold" x="${doorX - 16}" y="${isTopRow ? ry + 96 : ry - 2}" width="32" height="6" rx="3" fill="${meta.color}"/>
+        <circle class="store-door-notch" cx="${doorX}" cy="${doorY}" r="4.5"/>
 
         <!-- Start / Destination Prominent Badges -->
         ${isStart ? `
           <g>
-            <rect x="${rx + 15}" y="${isTopRow ? ry + 50 : ry + 68}" width="130" height="20" rx="10" fill="var(--start-light)" stroke="var(--start-border)" stroke-width="1.5"/>
-            <text x="${rx + 80}" y="${isTopRow ? ry + 64 : ry + 82}" font-size="10" font-weight="800" fill="#047857" text-anchor="middle">🚩 START POINT</text>
+            <rect x="${rx + 14}" y="${ry + 74}" width="132" height="20" rx="10" fill="var(--start-light)" stroke="var(--start-border)" stroke-width="1.5"/>
+            <text x="${rx + 80}" y="${ry + 88}" font-size="10" font-weight="800" fill="#047857" text-anchor="middle">🚩 START POINT</text>
           </g>
         ` : ''}
 
         ${isDest ? `
           <g>
-            <rect x="${rx + 15}" y="${isTopRow ? ry + 50 : ry + 68}" width="130" height="20" rx="10" fill="var(--dest-light)" stroke="var(--dest-border)" stroke-width="1.5"/>
-            <text x="${rx + 80}" y="${isTopRow ? ry + 64 : ry + 82}" font-size="10" font-weight="800" fill="#b91c1c" text-anchor="middle">🎯 DESTINATION</text>
+            <rect x="${rx + 14}" y="${ry + 74}" width="132" height="20" rx="10" fill="var(--dest-light)" stroke="var(--dest-border)" stroke-width="1.5"/>
+            <text x="${rx + 80}" y="${ry + 88}" font-size="10" font-weight="800" fill="#b91c1c" text-anchor="middle">🎯 DESTINATION</text>
           </g>
         ` : ''}
       </g>
@@ -441,7 +443,7 @@ function render() {
         const dirText = b.f > a.f ? `▲ Up to ${F_SHORT[b.f]}` : `▼ Down to ${F_SHORT[b.f]}`;
         h += `
           <g>
-            <rect class="transfer-badge-box" x="${a.x - 48}" y="${a.y - 32}" width="96" height="22" rx="11"/>
+            <rect class="transfer-badge-box" x="${a.x - 50}" y="${a.y - 32}" width="100" height="22" rx="11"/>
             <text class="transfer-badge-text" x="${a.x}" y="${a.y - 17}">${dirText}</text>
           </g>
         `;
@@ -449,7 +451,7 @@ function render() {
       if (b.f === f) {
         h += `
           <g>
-            <rect class="transfer-badge-box" x="${b.x - 32}" y="${b.y - 32}" width="64" height="22" rx="11"/>
+            <rect class="transfer-badge-box" x="${b.x - 34}" y="${b.y - 32}" width="68" height="22" rx="11"/>
             <text class="transfer-badge-text" x="${b.x}" y="${b.y - 17}">Arrive</text>
           </g>
         `;
@@ -457,7 +459,7 @@ function render() {
     }
   }
 
-  // 5) Amenities & Connectors (Lifts, Escalators, Stairs, Entrance)
+  // 5) Amenities, Facility Kiosks & Subtle Waypoints
   here.forEach(n => {
     const isExplored = st.explored.has(n.id);
     const isCurrent = st.cur === n.id;
@@ -465,27 +467,27 @@ function render() {
 
     if (["stairs", "escalator", "lift"].includes(n.type)) {
       const typeIcons = {
-        stairs: "🪜",
-        escalator: "⚡",
-        lift: "🛗"
+        stairs: "🪜 West Stairs",
+        escalator: "⚡ Escalator Bay",
+        lift: "🛗 Elevator Tower"
       };
       h += `
         <g>
-          <rect class="kiosk-card${c}" x="${n.x - 38}" y="${n.y - 15}" width="76" height="30" rx="8" filter="url(#card-shadow)"/>
-          <text class="kiosk-label" x="${n.x}" y="${n.y + 4}">${typeIcons[n.type]} ${n.label}</text>
+          <rect class="kiosk-card${c}" x="${n.x - 44}" y="${n.y - 16}" width="88" height="32" rx="9" filter="url(#card-shadow)"/>
+          <text class="kiosk-label" x="${n.x}" y="${n.y + 4}">${typeIcons[n.type]}</text>
         </g>
       `;
     } else {
-      // Junction Waypoints for Dijkstra Trace
-      h += `<circle class="waypoint-node${c}" cx="${n.x}" cy="${n.y}" r="${n.type === "store" ? 4 : 7}"/>`;
+      // Junction Waypoints for Dijkstra Trace (Subtle when idle, prominent when active)
+      h += `<circle class="waypoint-node${c}" cx="${n.x}" cy="${n.y}" r="${n.type === "store" ? 3.5 : 5.5}"/>`;
       if (n.type === "junction") {
-        h += `<text class="waypoint-label" x="${n.x}" y="${n.y + 20}">${n.label}</text>`;
+        h += `<text class="waypoint-label" x="${n.x}" y="${n.y + 19}">${n.label}</text>`;
       }
       if (n.type === "entrance") {
         h += `
           <g>
-            <rect x="${n.x - 65}" y="${n.y + 12}" width="130" height="26" rx="8" fill="var(--primary-light)" stroke="var(--primary-border)" stroke-width="1.5" filter="url(#card-shadow)"/>
-            <text class="kiosk-label" x="${n.x}" y="${n.y + 29}" fill="var(--primary)">🚪 Main Entrance Lobby</text>
+            <rect x="${n.x - 75}" y="${n.y + 10}" width="150" height="28" rx="8" fill="var(--primary-light)" stroke="var(--primary-border)" stroke-width="1.5" filter="url(#card-shadow)"/>
+            <text class="kiosk-label" x="${n.x}" y="${n.y + 28}" fill="var(--primary)">🚪 Main Galleria Entrance</text>
           </g>
         `;
       }
@@ -666,9 +668,38 @@ async function go() {
 }
 
 /* ==========================================================================
+   Theme Controller (Light / Dark Mode)
+   ========================================================================== */
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("storeway_theme", theme);
+  const lbl = $("theme-label");
+  if (lbl) {
+    lbl.textContent = theme === "dark" ? "Dark" : "Light";
+  }
+  render();
+}
+
+function initTheme() {
+  const currentTheme = localStorage.getItem("storeway_theme") || "light";
+  setTheme(currentTheme);
+
+  const toggleBtn = $("theme-toggle");
+  if (toggleBtn) {
+    toggleBtn.onclick = () => {
+      const activeTheme = document.documentElement.getAttribute("data-theme") || "light";
+      const nextTheme = activeTheme === "dark" ? "light" : "dark";
+      setTheme(nextTheme);
+    };
+  }
+}
+
+/* ==========================================================================
    Initialization & Event Listeners
    ========================================================================== */
 function init() {
+  initTheme();
+
   // Setup Floor Selection Tabs
   $("tabs").innerHTML = F.map((n, i) =>
     `<button class="tab-pill" data-f="${i}">

@@ -1,25 +1,35 @@
 /* ==========================================================================
    StoreWay • Mall Navigation & Pathfinding Design System
+   Refined Light & Dark Mode System with Architectural Floorplan Styling
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. Design Tokens: Light Mode (DEFAULT)
+   -------------------------------------------------------------------------- */
 :root {
-  --bg-app: #f8fafc;
+  /* App Backgrounds & Card Surfaces */
+  --bg-app: #f4f6fa;
   --bg-card: #ffffff;
-  --bg-subtle: #f1f5f9;
+  --bg-subtle: #edf2f7;
   --bg-elevated: #ffffff;
+
+  /* Typography Colors */
   --text-main: #0f172a;
-  --text-muted: #64748b;
+  --text-muted: #475569;
   --text-dim: #94a3b8;
+
+  /* Borders & Dividers */
   --border-light: #e2e8f0;
   --border-subtle: #edf2f7;
-  --border-focus: #3b82f6;
+  --border-focus: #2563eb;
 
-  /* Brand Accents */
+  /* Primary Brand Theme */
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
   --primary-light: #eff6ff;
   --primary-border: #bfdbfe;
   
+  /* Navigation Status Indicators */
   --start-accent: #10b981;
   --start-light: #ecfdf5;
   --start-border: #a7f3d0;
@@ -32,59 +42,108 @@
   --warning-light: #fef3c7;
   --warning-border: #fde68a;
 
+  /* Architectural Mall Floorplan Tokens (Light) */
+  --map-bg: #fafbfc;
+  --mall-boundary: #ffffff;
+  --mall-wall-stroke: #cbd5e1;
+  --mall-curtain-glass: #f1f5f9;
   --corridor-base: #e2e8f0;
-  --corridor-floor: #f8fafc;
-  --store-bg: #ffffff;
-  --store-border: #cbd5e1;
+  --corridor-floor: #ffffff;
+  --corridor-dash: #cbd5e1;
+  --atrium-outer: #e2e8f0;
+  --atrium-inner: #f8fafc;
+  --atrium-border: #bfdbfe;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.03);
+  --store-card-bg: #ffffff;
+  --store-card-stroke: #94a3b8;
+  --store-title-color: #0f172a;
+  --store-unit-color: #64748b;
+  --store-door-accent: #2563eb;
+
+  --kiosk-bg: #ffffff;
+  --kiosk-stroke: #cbd5e1;
+  --kiosk-label: #0f172a;
+
+  --waypoint-node: #94a3b8;
+  --waypoint-label: #94a3b8;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.03);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 10px 18px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.03);
 
   --radius-lg: 16px;
   --radius-md: 10px;
   --radius-sm: 6px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg-app: #090d16;
-    --bg-card: #111827;
-    --bg-subtle: #1e293b;
-    --bg-elevated: #162032;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --text-dim: #64748b;
-    --border-light: #1f293d;
-    --border-subtle: #162235;
-    --border-focus: #60a5fa;
+/* --------------------------------------------------------------------------
+   2. Design Tokens: Dark Mode (Explicit data-theme="dark")
+   -------------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  --bg-app: #090d16;
+  --bg-card: #111827;
+  --bg-subtle: #1e293b;
+  --bg-elevated: #162032;
 
-    --primary: #3b82f6;
-    --primary-hover: #2563eb;
-    --primary-light: #172554;
-    --primary-border: #1e3a8a;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
 
-    --start-light: #064e3b;
-    --start-border: #047857;
+  --border-light: #1f293d;
+  --border-subtle: #162235;
+  --border-focus: #60a5fa;
 
-    --dest-light: #450a0a;
-    --dest-border: #991b1b;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-light: #172554;
+  --primary-border: #1e3a8a;
 
-    --warning-light: #451a03;
-    --warning-border: #78350f;
+  --start-accent: #10b981;
+  --start-light: #064e3b;
+  --start-border: #047857;
 
-    --corridor-base: #1e293b;
-    --corridor-floor: #0d1424;
-    --store-bg: #151f32;
-    --store-border: #334155;
+  --dest-accent: #ef4444;
+  --dest-light: #450a0a;
+  --dest-border: #991b1b;
 
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-    --shadow-lg: 0 10px 20px -3px rgb(0 0 0 / 0.6);
-  }
+  --warning: #f59e0b;
+  --warning-light: #451a03;
+  --warning-border: #78350f;
+
+  /* Architectural Mall Floorplan Tokens (Dark) */
+  --map-bg: #0d1322;
+  --mall-boundary: #111827;
+  --mall-wall-stroke: #1f293d;
+  --mall-curtain-glass: #0f172a;
+  --corridor-base: #1e293b;
+  --corridor-floor: #0f172a;
+  --corridor-dash: #334155;
+  --atrium-outer: #1e293b;
+  --atrium-inner: #131b2e;
+  --atrium-border: #1e3a8a;
+
+  --store-card-bg: #151f32;
+  --store-card-stroke: #334155;
+  --store-title-color: #f8fafc;
+  --store-unit-color: #94a3b8;
+  --store-door-accent: #60a5fa;
+
+  --kiosk-bg: #162032;
+  --kiosk-stroke: #334155;
+  --kiosk-label: #f8fafc;
+
+  --waypoint-node: #475569;
+  --waypoint-label: #64748b;
+
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 20px -3px rgb(0 0 0 / 0.6);
 }
 
+/* --------------------------------------------------------------------------
+   3. Base & Reset
+   -------------------------------------------------------------------------- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -100,11 +159,12 @@ body {
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* ==========================================================================
-   Header Component
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   4. Header & Theme Toggle
+   -------------------------------------------------------------------------- */
 header.app-header {
   background: var(--bg-card);
   border-bottom: 1px solid var(--border-light);
@@ -117,6 +177,7 @@ header.app-header {
   top: 0;
   z-index: 50;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .brand-wrap {
@@ -133,7 +194,7 @@ header.app-header {
   border-radius: 10px;
   display: grid;
   place-items: center;
-  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.35);
 }
 
 .brand-text h1 {
@@ -188,17 +249,70 @@ header.app-header {
   height: 8px;
   border-radius: 50%;
   background: var(--start-accent);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
 }
 
-/* ==========================================================================
-   Navigation & Search Controls Bar
-   ========================================================================== */
+/* Polished Compact Light / Dark Toggle */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--bg-card);
+  border-color: var(--primary-border);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-btn .theme-icon {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  transition: transform 0.25s ease, color 0.2s ease;
+}
+
+:root:not([data-theme="dark"]) .theme-toggle-btn .theme-icon.sun {
+  color: #f59e0b;
+}
+:root:not([data-theme="dark"]) .theme-toggle-btn .theme-icon.moon {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle-btn .theme-icon.moon {
+  color: #60a5fa;
+}
+:root[data-theme="dark"] .theme-toggle-btn .theme-icon.sun {
+  display: none;
+}
+
+.theme-toggle-label {
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   5. Search & Route Planning Controls Panel
+   -------------------------------------------------------------------------- */
 .controls-panel {
   background: var(--bg-card);
   border-bottom: 1px solid var(--border-light);
   padding: 14px 28px;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .controls-inner {
@@ -231,7 +345,7 @@ header.app-header {
 .input-pill:focus-within {
   border-color: var(--border-focus);
   background: var(--bg-card);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .input-pill label {
@@ -263,7 +377,7 @@ header.app-header {
   outline: none;
   cursor: pointer;
   padding: 4px 6px;
-  min-width: 175px;
+  min-width: 180px;
 }
 
 .swap-btn {
@@ -369,9 +483,9 @@ header.app-header {
   transform: translateY(0);
 }
 
-/* ==========================================================================
-   Layout Containers
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   6. Main Layout Containers
+   -------------------------------------------------------------------------- */
 .app-container {
   max-width: 1540px;
   width: 100%;
@@ -391,11 +505,12 @@ header.app-header {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-/* ==========================================================================
-   Floor Selection Tab Navigation
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   7. Floor Selection Tabs
+   -------------------------------------------------------------------------- */
 .tabs-header-bar {
   padding: 14px 20px;
   background: var(--bg-card);
@@ -421,7 +536,7 @@ header.app-header {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 7px 15px;
   border-radius: 8px;
   border: none;
   background: transparent;
@@ -488,9 +603,9 @@ header.app-header {
 .legend-swatch.processing { background: var(--warning); }
 .legend-swatch.crowded { background: #f59e0b; border: 1px dashed #d97706; }
 
-/* ==========================================================================
-   Mall Map SVG Presentation
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   8. Mall Map Viewport & SVG Architectural Floorplan
+   -------------------------------------------------------------------------- */
 .map-viewport {
   position: relative;
   background: var(--bg-subtle);
@@ -505,33 +620,32 @@ header.app-header {
 #map {
   width: 100%;
   height: auto;
-  max-height: 610px;
-  background: var(--bg-card);
+  max-height: 615px;
+  background: var(--map-bg);
   border: 1px solid var(--border-light);
   border-radius: 14px;
   display: block;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-/* Floor Plan Walls & Architectural Grounds */
-.mall-boundary-wall {
-  fill: var(--bg-card);
-  stroke: var(--border-light);
-  stroke-width: 3;
+/* Outer Walls & Glass Curtain Walls */
+.mall-boundary-outer {
+  fill: var(--mall-boundary);
+  stroke: var(--mall-wall-stroke);
+  stroke-width: 3.5;
 }
 
-.mall-zone-tag {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  fill: var(--text-dim);
-  text-anchor: middle;
-  text-transform: uppercase;
-  user-select: none;
+.mall-curtain-glass {
+  fill: none;
+  stroke: var(--mall-wall-stroke);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+  opacity: 0.6;
 }
 
 .mall-level-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: 0.08em;
   fill: var(--text-muted);
@@ -540,115 +654,152 @@ header.app-header {
   user-select: none;
 }
 
-/* Walkways & Concourse */
+.mall-zone-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  fill: var(--text-dim);
+  text-anchor: middle;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* Concourse & Walkways */
 .concourse-underlay {
   stroke: var(--corridor-base);
-  stroke-width: 54;
+  stroke-width: 62;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .concourse-surface {
   stroke: var(--corridor-floor);
-  stroke-width: 46;
+  stroke-width: 52;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .concourse-centerline {
-  stroke: var(--border-light);
+  stroke: var(--corridor-dash);
   stroke-width: 1.5;
   stroke-dasharray: 6 6;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-.atrium-ring-outer {
-  fill: none;
+/* Central Atrium Plaza & Rotunda */
+.atrium-outer-terrazzo {
+  fill: var(--atrium-outer);
   stroke: var(--border-light);
   stroke-width: 1.5;
+}
+
+.atrium-surface-circle {
+  fill: var(--atrium-inner);
+  stroke: var(--atrium-border);
+  stroke-width: 1.5;
+}
+
+.atrium-balustrade-ring {
+  fill: none;
+  stroke: var(--border-light);
+  stroke-width: 1;
   stroke-dasharray: 4 4;
 }
 
-.atrium-ring-inner {
-  fill: var(--bg-card);
-  stroke: var(--primary-border);
-  stroke-width: 1.5;
+.atrium-title-label {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  fill: var(--text-dim);
+  text-anchor: middle;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 
-/* Stores & Storefront Presentation */
+/* --------------------------------------------------------------------------
+   9. Retail Store Units Presentation
+   -------------------------------------------------------------------------- */
 .store-group {
   cursor: pointer;
 }
 
 .store-card {
-  fill: var(--store-bg);
-  stroke: var(--store-border);
-  stroke-width: 1.5;
+  fill: var(--store-card-bg);
+  stroke: var(--store-card-stroke);
+  stroke-width: 1.75;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .store-group:hover .store-card {
   stroke: var(--primary);
-  stroke-width: 2.5;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
+  stroke-width: 2.75;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.1));
 }
 
 .store-group.is-start .store-card {
   stroke: var(--start-accent);
   stroke-width: 3.5;
-  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.35));
+  filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.45));
 }
 
 .store-group.is-dest .store-card {
   stroke: var(--dest-accent);
   stroke-width: 3.5;
-  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.35));
+  filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.45));
 }
 
-.store-fascia-bar {
+.store-canopy-bar {
   pointer-events: none;
 }
 
-.store-category-label {
+.store-category-text {
   font-size: 9.5px;
-  font-weight: 700;
+  font-weight: 800;
   text-anchor: middle;
   fill: #ffffff;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   pointer-events: none;
 }
 
 .store-name-text {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   text-anchor: middle;
-  fill: var(--text-main);
+  fill: var(--store-title-color);
   pointer-events: none;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .store-unit-number {
   font-size: 10px;
   font-weight: 700;
   text-anchor: middle;
-  fill: var(--text-dim);
+  fill: var(--store-unit-color);
   pointer-events: none;
   letter-spacing: 0.04em;
 }
 
-.store-door-mat {
-  fill: var(--primary);
-  opacity: 0.85;
+.store-window-line {
+  stroke: var(--border-light);
+  stroke-width: 1.5;
+  opacity: 0.7;
 }
 
-.store-door-marker {
+.store-door-threshold {
+  fill: var(--store-door-accent);
+  opacity: 0.9;
+}
+
+.store-door-notch {
   fill: #ffffff;
-  stroke: var(--primary);
+  stroke: var(--store-door-accent);
   stroke-width: 2;
 }
 
-/* Route & Walkway Edges */
+/* --------------------------------------------------------------------------
+   10. Route Ribbon & Navigation Traversal
+   -------------------------------------------------------------------------- */
 .edge-corridor {
   stroke: var(--border-light);
   stroke-width: 2;
@@ -678,10 +829,9 @@ header.app-header {
   }
 }
 
-/* Floor Change Badges */
 .transfer-badge-box {
   fill: #ea580c;
-  filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.3));
+  filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.35));
 }
 
 .transfer-badge-text {
@@ -691,10 +841,12 @@ header.app-header {
   text-anchor: middle;
 }
 
-/* Connectors & Kiosks */
+/* --------------------------------------------------------------------------
+   11. Connectors, Amenities & Subtle Dijkstra Trace Nodes
+   -------------------------------------------------------------------------- */
 .kiosk-card {
-  fill: var(--bg-card);
-  stroke: var(--border-light);
+  fill: var(--kiosk-bg);
+  stroke: var(--kiosk-stroke);
   stroke-width: 1.5;
   transition: all 0.2s ease;
 }
@@ -714,40 +866,46 @@ header.app-header {
   font-size: 11px;
   font-weight: 700;
   text-anchor: middle;
-  fill: var(--text-main);
+  fill: var(--kiosk-label);
   pointer-events: none;
 }
 
-/* Waypoints / Nodes for Dijkstra Trace */
+/* Waypoints: Subtle when idle, prominent during Dijkstra exploration */
 .waypoint-node {
-  fill: var(--text-dim);
+  fill: var(--waypoint-node);
   stroke: var(--bg-card);
-  stroke-width: 2.5;
+  stroke-width: 2;
+  opacity: 0.65;
   transition: all 0.2s ease;
 }
 
 .waypoint-node.ex {
   fill: #3b82f6;
-  filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.6));
+  stroke: #ffffff;
+  opacity: 1;
+  r: 8;
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.7));
 }
 
 .waypoint-node.cu {
   fill: var(--warning);
   stroke: #ffffff;
   stroke-width: 3;
+  opacity: 1;
   r: 10;
-  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.85));
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.9));
 }
 
 .waypoint-label {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 600;
-  fill: var(--text-dim);
+  fill: var(--waypoint-label);
   text-anchor: middle;
   pointer-events: none;
+  opacity: 0.75;
 }
 
-/* User Location Puck */
+/* User Location Puck with Pulsing Radar */
 #me {
   fill: var(--dest-accent);
   stroke: #ffffff;
@@ -766,9 +924,9 @@ header.app-header {
   justify-content: space-between;
 }
 
-/* ==========================================================================
-   Side Panel: Directions, Metrics, Benchmarks
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   12. Side Panel: Telemetry, Directions, Benchmarks
+   -------------------------------------------------------------------------- */
 .side-panel {
   display: flex;
   flex-direction: column;
@@ -859,7 +1017,7 @@ header.app-header {
   color: var(--primary);
 }
 
-/* Step-by-Step Directions */
+/* Directions List */
 .directions-list {
   list-style: none;
   display: flex;
@@ -895,10 +1053,22 @@ header.app-header {
   color: #9a3412;
 }
 
+:root[data-theme="dark"] .direction-step.transfer {
+  background: #431407;
+  border-color: #7c2d12;
+  color: #fdba74;
+}
+
 .direction-step.arrive {
   background: #f0fdf4;
   border-color: #bbf7d0;
   color: #166534;
+}
+
+:root[data-theme="dark"] .direction-step.arrive {
+  background: #052e16;
+  border-color: #166534;
+  color: #86efac;
 }
 
 .step-num {
@@ -921,7 +1091,7 @@ header.app-header {
   background: var(--start-accent);
 }
 
-/* Algorithm Comparison Table */
+/* Algorithm Comparison Benchmark Table */
 .cmp-container {
   font-size: 12px;
 }
@@ -1055,7 +1225,9 @@ header.app-header {
   background: var(--text-dim);
 }
 
-/* Responsive Media Queries */
+/* --------------------------------------------------------------------------
+   13. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
 @media (max-width: 1120px) {
   .app-container {
     grid-template-columns: 1fr;
@@ -1069,6 +1241,7 @@ header.app-header {
 @media (max-width: 768px) {
   header.app-header {
     padding: 12px 16px;
+    flex-wrap: wrap;
   }
   .controls-panel {
     padding: 12px 16px;
